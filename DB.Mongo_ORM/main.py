@@ -28,9 +28,9 @@ def find_cheapest(db):
     Отсортировать билеты из базы по возрастанию цены
     Документация: https://docs.mongodb.com/manual/reference/method/cursor.sort/
     """
-    events_sorted_price = db.event.find().sort('price')
-    return [(event['artist'], f"{event['price']}\u20BD", event['place'], str(event['date']))
-            for event in events_sorted_price]
+    sorted_price = db.event.find().sort('price')
+    return [(event['artist'], f"{event['price']}\u20BD", event['location'], str(event['date']))
+            for event in sorted_price]
 
 
 def find_by_name(name, db):
@@ -40,13 +40,13 @@ def find_by_name(name, db):
     """
     regex = re.compile(f'.*{name}.*', re.IGNORECASE)
     search_name = db.event.find({'artist': regex}).sort('price')
-    return [(event['artist'], f"{event['price']}\u20BD", event['place'], str(event['date']))
+    return [(event['artist'], f"{event['price']}\u20BD", event['location'], str(event['date']))
             for event in search_name]
 
 
 def find_sorted_for_date(db):
     sorted_date = db['event'].find().sort('date')
-    return [(event['artist'], f"{event['price']}\u20BD", event['place'], str(event['date']))
+    return [(event['artist'], f"{event['price']}\u20BD", event['location'], str(event['date']))
             for event in sorted_date]
 
 
